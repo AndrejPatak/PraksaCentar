@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.okvir.me" version="1.0.0">
+    <name>Praksa Centar</name>
+    <description>Sample Apache Cordova App</description>
+    <author email="okvir@gmail.com" href="https://okvir.skenda.me">
+        oKvir
+    </author>
+    <allow-intent href="http://*/*"/>
+    <allow-intent href="https://*/*"/>
+    <platform name="android">
+        <!-- Adaptive Icon Configuration -->
+        <icon background="res/assets/icon-background.png" density="xxxhdpi" foreground="res/assets/icon-foreground.png"/>
+    </platform>
+</widget>
