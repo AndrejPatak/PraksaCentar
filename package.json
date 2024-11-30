@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "cordova-android": "^13.0.0"
+  },
+  "dependencies": {
+    "live-server": "^1.2.2"
   }
 }
