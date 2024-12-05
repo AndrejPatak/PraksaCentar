@@ -5,10 +5,23 @@
     <author email="okvir@gmail.com" href="https://okvir.skenda.me">
         oKvir
     </author>
+    <edit-config xmlns:android="http://schemas.android.com/apk/res/android" file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+        <application android:usesCleartextTraffic="true"/>
+    </edit-config>
+    <!-- Allow navigation to external URLs -->
+    <allow-navigation href="http://*/*"/>
+    <allow-navigation href="https://*/*"/>
+    <!-- Allow access to specific domains -->
+    <access origin="*"/>
+    <access origin="http://cdn.skenda.me:5000"/>
+    <access origin="https://cdn.skenda.me:5000"/>
+    <!-- Allow intents for HTTP and HTTPS -->
     <allow-intent href="http://*/*"/>
     <allow-intent href="https://*/*"/>
     <platform name="android">
         <!-- Adaptive Icon Configuration -->
         <icon background="res/assets/icon-background.png" density="xxxhdpi" foreground="res/assets/icon-foreground.png"/>
-    </platform>
+	</platform>
+	<preference name="StatusBarOverlaysWebView" value="false" />
+	 <preference name="StatusBarBackgroundColor" value="#2B2830" />
 </widget>

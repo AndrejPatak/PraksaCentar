@@ -1,0 +1,105 @@
+body{
+	background-color: var(--background-fun-color);
+}
+
+
+.page{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	height: calc(100vh - 10px);
+}
+.title{
+	color: var(--title-color);
+	
+	& > #praksa{
+		display: flex;
+		flex-direction: row;
+		& > *{
+			margin: .2rem;
+			padding: 5px;
+			font-size: 3rem;
+		}
+		& :nth-child(1){
+			transform: rotate(-20deg);
+		}
+		& :nth-child(2){
+
+			transform: rotate(15deg);
+		}
+		& :nth-child(3){
+
+			transform: rotate(-10deg);
+		}
+		& :nth-child(4){
+
+			transform: rotate(20deg);
+		}
+		& :nth-child(5){
+			transform: rotate(-20deg);
+
+		}	
+	}
+
+	& > #centar{
+		display: flex;
+		flex-direction: row;
+		& > *{
+			margin: .2rem;
+			padding: 5px;
+			font-size: 3rem;
+		}
+		& :nth-child(1){
+			transform: rotate(-20deg);
+		}
+		& :nth-child(2){
+
+			transform: rotate(15deg);
+		}
+		& :nth-child(3){
+
+			transform: rotate(-10deg);
+		}
+		& :nth-child(4){
+
+			transform: rotate(20deg);
+		}
+		& :nth-child(5){
+			transform: rotate(-20deg);
+
+		}	
+	}
+}
+.content{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+
+	/* border: solid white 1px; */
+	
+	height: 50vh;
+}
+button:active{
+	background: var(--button-clicked-color);
+}
+
+#get_started{
+	padding: 1rem;
+
+	font-size: 2rem;
+	
+	background-color: var(--button-fun-color);
+
+	color: var(--button-text-color);
+
+	border: none;
+	border-radius: 15px;
+
+}
+
+#get_started:active{
+	background: var(--button-clicked-color);
+}
+

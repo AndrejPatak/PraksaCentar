@@ -1,0 +1,17 @@
+:root{
+	--background-fun-color: #25153B;
+	--background-color: #1A181D;
+	--text-light-color: #D9D9D9;
+	--subtext-color: #BFBBC6;
+	--text-dark-color: #1A181D;
+	--title-color: #FFF078;
+	--button-color: #D9D9D9;
+	--button-fun-color: #FFF078;
+	--button-highlight-color: #FFF07850;
+	--button-highlight-opaque-color: #FFF078;
+	--button-text-color: #231439;
+	--button-clicked-color: #FBB536;
+	--panel-background-color: #2B2830;
+	--panel-text-color: #D9D9D9;
+	--divider-color: #44404A;
+}

@@ -1,0 +1,12 @@
+body{
+        background: var(--background-color);
+        margin: 0;
+
+        color: var(--text-light-color);
+        font-family: Inter-Normal;
+}
+
+button{
+	background-color: var(--text-light-color);
+	color: var(--button-text-color);
+}
