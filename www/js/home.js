@@ -1,9 +1,8 @@
-const replace = document.getElementById("replace")
-
-document.addEventListener("deviceready", function () {
-    // Now the plugin is available
-    cordova.plugin.http.setServerTrustMode('nocheck'); // Optional for ignoring SSL cert validation (not recommended for production)
-}, false);
+const latestCard = document.getElementById("latest-event");
+const latestCardTitle = document.querySelector("#latest-event > #title");
+const latestCardDescription= document.querySelector("#latest-event > #event > #info > #description");
+const latestCardName= document.querySelector("#latest-event > #event > #info > #name");
+const scrollContent = document.getElementById("scroll-content");
 
 
 async function fetchAsync (url) {
@@ -12,16 +11,21 @@ async function fetchAsync (url) {
   return data;
 }
 
-async function setData (of, url){
+async function setDataAsString (of, url){
 	const data = await fetchAsync(url);
-	of.innerHTML = 	data.data;
+	of.querySelector("#title").innerHTML = data.data;
 }
 
-try {
-	setData(replace, "https://cdn.skenda.me:443")
-} catch (error) {
-	console.log("Unable to fetch data for replacement: ", error);
+async function updateLatestEvent(){
+	const latestCardData = await fetchAsync("https://cdn.skenda.me/latest-event");
+	latestCardTitle.querySelector("#main").innerHTML = "Latest:";
+	latestCardTitle.querySelector("#sub").innerHTML = "Your latest event";
+	latestCardDescription.innerHTML = latestCardData.description;
+	latestCardName.innerHTML = latestCardData.name;
+	latestCard.querySelector("#event > #icon > img").src = latestCardData.icon;
 }
+
+
 // function setCordovaData(url) {
 //     cordova.plugin.http.get(url, {}, {}, function (response) 
 //        // Parse and use the response
@@ -34,4 +38,10 @@ try {
 // }
 
 
+for(i = 0; i < 7; i++){
+	scrollContent.innerHTML += "<div class='scroll-element'> scroll-element </div>"
+	scrollContent.querySelector(".scroll-element:nth-child(" + (i + 1) + ")").innerHTML += " " + i;
+}
+
+updateLatestEvent()
 
