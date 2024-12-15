@@ -24,15 +24,32 @@ footer{
 
 
 
-.nav-item:nth-child(1){
+
+
+
+.nav-item{
 	
-	
-	& > a > *{
-		color: var(--button-fun-color);
+	background-color: transparent;
+	border: none;
+
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+		
+
+	& > i{
+		color: var(--panel-text-color);
+		font-size: var(--nav-size);
 	}
 }
 
-.nav-item:nth-child(1):before {
+.highlight > i{
+	color: var(--button-fun-color);
+}
+
+.highlight:before {
   content : "";
   position: absolute;
   justify-self: center;
@@ -42,19 +59,6 @@ footer{
   border-bottom: .2rem solid var(--button-highlight-opaque-color);
 }
 
-.nav-item{
-	height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-		
-
-	& > a > *{
-		color: var(--panel-text-color);
-		font-size: 2rem;
-	}
-}
 
 header{
 	width: 100%;
@@ -66,7 +70,6 @@ header{
 	border-bottom: solid .2rem var(--divider-color);
 	
 	color: var(--text-light-color);
-	
 	display: flex;
 	justify-content: space-evenly;
 
@@ -88,7 +91,7 @@ header{
 
 		& > img{
 			height: 100%;
-			aspect-raito: 1;
+			aspect-ratio: 1/1;
 			filter: invert(100%) blur(50%);
 		}
 	}
@@ -110,13 +113,17 @@ header{
 	}
 
 	& #ime{
-		font-size: 25pt;
+		font-size: var(--greeting-title-size);
 	}
 
 	& #skola{
 		color: var(--subtext-color);
-		font-size: 13pt;
+		font-size: var(--greeting-subtitle-size);
 		margin-bottom: 10px;
+	}
+
+	& > #events > .title{
+		font-size: var(--greeting-title-size);
 	}
 
 }
@@ -130,10 +137,20 @@ header{
 
 	overflow-y: scroll;
 	overflow-x: hidden;
+	
+	& > #recently-posted{
 
-	font-size: 2rem;
+		font-size: var(--content-size);
+		& > #main{
+			font-size: var(--title-size);
+		}
+		& > #sub{
+			font-size: var(--subtitle-size);
+		}
 
+	}
 
+	
 }
 
 
@@ -145,7 +162,6 @@ header{
 	
 	align-content: center;
 	
-	font-size: 5rem;
 	font-family: Inter-Normal;
 
 	color: var(--text-light-color);
@@ -159,9 +175,9 @@ header{
 		padding: 1rem;
 		padding-top: 0;
 		padding-bottom: .5rem;
-		font-size: 2rem;
+		font-size: var(--title-size);
 		& > #sub{
-			font-size: 1rem;
+			font-size: var(--subtitle-size);
 			color: var(--subtext-color)
 		}
 	}
@@ -171,7 +187,7 @@ header{
 		height: fit-content;
 		min-height: 5rem;
 
-		font-size: 1.5rem;
+		font-size: var(--content-size);
 		background-color: var(--card-background);
 		
 		display: flex;
@@ -226,10 +242,10 @@ header{
 				
 
 			& > #name{
-				font-size: 2rem;
+				font-size: var(--title-size);
 			}
 			& > #description{
-				font-size: 1rem;
+				font-size: var(--content-size);
 				color: var(--subtext-color);
 				height: 100%;
 			}
@@ -248,17 +264,105 @@ header{
 
 .scroll-element{
 	border-radius: 15px;
-	border: solid .3rem var(--text-light-color);
+	/*border: solid .3rem var(--text-light-color);*/
 	
+	background: var(--card-background);
+
 	width: 90vw;
 	height: 33vh;
-	display: flex;
 	
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	
+	overflow: hidden;
 
+	& > #image{
+		height: 100%;
+		width: 100%;
+		
+		padding: 1em;
+		
+		overflow: hidden;
+		
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		border-radius: 15px;
+
+		& > #picture{
+			
+			width: 100%;
+			height: 100%;
+
+			margin: 1rem;
+				
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			overflow: hidden;
+			border-radius: 10px;	
+			background-size: cover;
+
+		}
+
+	}
+
+	& > #chin{
+		background: var(--panel-background-color);
+		min-height: 33%;
+		width: calc(90vw - 2em);
+
+		display: flex;
+		flex-direction: row;
+
+		justify-content: space-between;
+
+		/*border: 1px solid cyan;*/
+		
+		position: relative;
+
+		padding: 1em;
+
+		& > #info{
+
+			/*outline: 1px solid yellow;*/
+
+			display: flex;
+			flex-direction: column;
+			align-items: space-evenly;
+			justify-content: left;
+			text-align: left;
+			& > .title{
+				font-size: calc(var(--title-size) / 1.5);
+				color: var(--text-color);
+			}
+
+			& > .subtitle{
+				font-size: var(--title-size);
+				color: var(--text-light-color);
+			}
+		}
+		& > #type{
+			aspect-ratio: 1/1;
+			border-radius: 10px;
+			background-color: var(--button-highlight-color);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 3rem;
+			color: var(--button-highlight-opaque-color);
+		}
+	}
+}
+
+#recently-posted{
+	padding-left: 1rem;
 }

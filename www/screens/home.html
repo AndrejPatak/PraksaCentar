@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Home</title>
+	<link rel="stylesheet" href="../fonts/sizes.css">
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/fonts.css">
 	<link rel="stylesheet" href="../css/default.css">
@@ -18,16 +19,13 @@
 			<div id="skola">ETS "Nikola Tesla"</div>
 			<button id="view-profile">View Profile</button>
 		</div>
-
-	
-
 	</header>
 	
 	<div id="screen">
 		<div id="latest-event">
 			<div id="title">
-				<div id="main">main</div>
-				<div id="sub">sub</div>
+				<div id="main">Latest</div>
+				<div id="sub">Your latest event</div>
 			</div>
 			<div id="event">
 				<div id="icon"><img src="https://cdn.skenda.me/mtel-ikona.png" alt="event_logo.jpg"></div>
@@ -43,25 +41,32 @@
 			</div>
 			
 		</div>
+		
 
+		<div id="recently-posted">
+			<div id="main">
+				Recently posted:		
+			</div>
+			<div id="sub">
+			</div>
+
+				
+		</div>
 		<div id="scroll-content">
-			<div class="scroll-element"> Erm... </div>
+		
 		</div>
 	</div>	
 		
 	<footer>
-		<div class="nav-item">	
-			<a href=""><i class="fa-solid fa-house"></i></a>
-		</div>
-		<div class="nav-item">
-			<a href=""><i class="fa-solid fa-book"></i></a>
-		</div>
-		<div class="nav-item">
-			<a href=""><i class="fa-solid fa-trophy"></i></a>
-		</div>
-		<div class="nav-item">	
-			<a href=""><i class="fa-solid fa-user"></i></a>
-		</div>
+		<button class="nav-item highlight" id="homeButton" >	
+			<i class="fa-solid fa-house"></i>
+		</button>
+		<button class="nav-item" id="eventButton">
+			<i class="fa-solid fa-search"></i>
+		</button>
+		<button class="nav-item" id="userButton">	
+			<i class="fa-solid fa-user"></i>
+		</button>
 	</footer>
 
 	<script src="../js/home.js"></script>

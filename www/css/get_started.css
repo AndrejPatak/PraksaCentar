@@ -5,10 +5,12 @@ body{
 
 .page{
 	display: flex;
-	justify-content: center;
-	align-items: center;
+
+	flex-direction: column;
+
+	justify-content: center;	
 	
-	height: calc(100vh - 10px);
+	height: 100vh;
 }
 .title{
 	color: var(--title-color);
@@ -72,14 +74,13 @@ body{
 	}
 }
 .content{
+	
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
 
 	/* border: solid white 1px; */
 	
-	height: 50vh;
+	
 }
 button:active{
 	background: var(--button-clicked-color);
@@ -97,9 +98,30 @@ button:active{
 	border: none;
 	border-radius: 15px;
 
+	align-self: center;
+
 }
 
 #get_started:active{
 	background: var(--button-clicked-color);
 }
 
+
+.background{
+
+	z-index: -1;
+
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../backgrounds/main_background.png");
+	background-size: cover;
+	background-position: center;
+}
+
+#title{
+	width: 200px;
+
+	align-self: center;
+	margin-top: -10rem;
+}
