@@ -18,13 +18,17 @@
       "cordova-plugin-advanced-http": {
         "ANDROIDBLACKLISTSECURESOCKETPROTOCOLS": "SSLv3,TLSv1"
       },
-      "cordova-plugin-statusbar": {}
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-navigationbar-color": {},
+      "cordova-plugin-keyboard": {}
     }
   },
   "devDependencies": {
     "cordova-android": "^13.0.0",
     "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-file": "^8.1.3",
+    "cordova-plugin-keyboard": "^1.2.0",
+    "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-statusbar": "^4.0.0"
   },
   "dependencies": {

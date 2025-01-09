@@ -6,7 +6,8 @@
         oKvir
     </author>
     <edit-config xmlns:android="http://schemas.android.com/apk/res/android" file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-        <application android:usesCleartextTraffic="true"/>
+		<application android:usesCleartextTraffic="true"/>
+		<attribute android:windowSoftInputMode="adjustNothing|stateHidden" />
     </edit-config>
     <!-- Allow navigation to external URLs -->
     <allow-navigation href="http://*/*"/>
@@ -23,5 +24,6 @@
         <icon background="res/assets/icon-background.png" density="xxxhdpi" foreground="res/assets/icon-foreground.png"/>
 	</platform>
 	<preference name="StatusBarOverlaysWebView" value="false" />
-	 <preference name="StatusBarBackgroundColor" value="#2B2830" />
+	<preference name="StatusBarBackgroundColor" value="#2B2830" />
+	<preference name="NavigationBarBackgroundColor" value="#2B2830" />
 </widget>

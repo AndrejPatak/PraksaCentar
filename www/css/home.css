@@ -22,11 +22,6 @@ footer{
 	
 }
 
-
-
-
-
-
 .nav-item{
 	
 	background-color: transparent;
@@ -90,8 +85,7 @@ header{
 		aspect-ratio: 1/1;
 
 		& > img{
-			height: 100%;
-			aspect-ratio: 1/1;
+			height: 100%;	
 			filter: invert(100%) blur(50%);
 		}
 	}
@@ -121,11 +115,9 @@ header{
 		font-size: var(--greeting-subtitle-size);
 		margin-bottom: 10px;
 	}
-
 	& > #events > .title{
 		font-size: var(--greeting-title-size);
 	}
-
 }
 
 #screen{
@@ -149,7 +141,29 @@ header{
 		}
 
 	}
+	& > #devToggle{
+		font-size: var(--title-size);
+		
+		width: fit-content;
+		height: fit-content;
+		
+		border: 2px solid var(--text-light-color);
+		border-radius: 15px;
+		overflow: hidden;
 
+		display: flex;
+		align-items: center;
+
+		justify-content: space-evenly;
+	
+		& > input{
+			border: none;
+			border-radius: 10px;
+			width: calc(var(--title-size) + 2em);
+			aspect-ratio: 1/1;
+			
+		}
+	}
 	
 }
 
@@ -167,7 +181,7 @@ header{
 	color: var(--text-light-color);
 	
 	margin-top: 1rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 
 
 
@@ -194,12 +208,15 @@ header{
 		flex-direction: row;
 		
 		align-items: center;
+	
 
+		position: relative;
 		& > #icon{
 			
 
 			height: fit-content;
-			width: 25%;
+			width: 5.5rem;
+		
 			
 			/*background: var(--text-light-color);*/
 									
@@ -207,12 +224,14 @@ header{
 			position: relative;
 			align-items: center;
 			justify-content: center;
+
+			
 		
 			&::before{
 				content: ' ';
 				position: absolute;
 				margin-left: -100%;
-				height: 100%;
+				height: 5.5rem;
 				aspect-ratio: 1/1;
 				background: var(--text-light-color);
 			}	
@@ -227,19 +246,19 @@ header{
 				border: solid 5px var(--text-light-color);
 				overflow: hidden;
 				
-				height: 100%;
+				width: 5.5rem;;
 				aspect-ratio: 1/1;
 				
 				
-				background: var(--background-color);
-				z-index: 1;
+				background: transparent;
+				z-index: 2;
 			}
 		}
 		& > #info{
-			min-height: 5rem;
+			height: 5rem;
 			padding-left: 1rem;
 
-				
+			overflow: hidden;
 
 			& > #name{
 				font-size: var(--title-size);
@@ -253,8 +272,21 @@ header{
 	}
 }
 
+#latest-event > #event > #icon::after{
+				content: ' ';
+				width: 5rem;
+				aspect-ratio: 1/1;
+				border-radius: 50%;
+				background-color: var(--background-color);
+				position: absolute;
+				align-self: center;
+				z-index: 0;
+
+			}
+
 #scroll-content{		
 	height: fit-content;
+	min-height: 100%;
 	width: 100%;
 
 	display: flex;
@@ -305,11 +337,13 @@ header{
 				
 			display: flex;
 			justify-content: center;
-			align-items: center;
+			align-items: top;
 
 			overflow: hidden;
 			border-radius: 10px;	
 			background-size: cover;
+
+			background-color: var(--card-picture-background);
 
 		}
 
@@ -317,7 +351,7 @@ header{
 
 	& > #chin{
 		background: var(--panel-background-color);
-		min-height: 33%;
+		min-height: 20%;
 		width: calc(90vw - 2em);
 
 		display: flex;
@@ -366,3 +400,78 @@ header{
 #recently-posted{
 	padding-left: 1rem;
 }
+
+#loading{
+
+	height: calc(100vh / 2);
+	display: flex;
+	align-items: center;
+
+	
+	& > #spinner{
+		border-radius: 50%;
+		aspect-ratio: 1/1;
+
+		width: 50px;
+
+		border: solid 5px var(--text-light-color);
+		border-bottom-color: transparent;
+
+		animation: rotate 1s infinite linear;	
+	}
+}
+
+
+
+.eventLoadingIcon{
+	position: absolute;
+	z-index: 2;	
+	width: 5rem;
+	height: 5rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 50%;
+	
+	& > svg{
+		width: 50px;
+		height: 50px;
+		filter: drop-shadow(0 0 5px black);
+		animation: rotate 1s infinite linear;	
+	}
+	
+	& > svg path{
+		
+		stroke: var(--text-light-color);
+	}
+}
+
+@keyframes rotate{
+	from{
+		rotate: 0deg;
+	}
+	to{
+		rotate: 360deg;
+	}
+}
+
+.errorIcon{
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	& > svg{
+		width: 33%;
+	}
+
+	& > svg path{
+		fill: var(--card-background);
+	}
+}
+
+

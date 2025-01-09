@@ -1,49 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset='UTF-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
 	<title>Praksa Centar</title>
+
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css' integrity='sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==' crossorigin='anonymous' referrerpolicy='no-referrer' />
+
+	<link rel='stylesheet' href='../css/colors.css'>
+	<link rel='stylesheet' href='../fonts/sizes.css'>
+	<link rel='stylesheet' href='../css/fonts.css'>
+	<link rel='stylesheet' href='../css/default.css'>
+	<link rel='stylesheet' href='../css/get_started.css'>
 	
-	<link rel="stylesheet" href="../css/colors.css">
-	<link rel="stylesheet" href="../css/fonts.css">
-	<link rel="stylesheet" href="../css/default.css">
-	<link rel="stylesheet" href="../css/get_started.css">
-	
-	<script src="../js/redirector.js"></script>
+	<script src='../js/redirector.js'></script>
 </head>
 <body>
-	<div class="page">
-		<div class="background"></div>
-		<div class="content">
-			<!-- <div class="title">
-				<div id="praksa">
-					<div>P</div>		
-					<div>R</div>		
-					<div>A</div>		
-					<div>K</div>		
-					<div>S</div>		
-					<div>A</div>
-				</div>
-				<div id="centar">
-					<div>C</div>		
-					<div>E</div>		
-					<div>N</div>		
-					<div>T</div>		
-					<div>A</div>		
-					<div>R</div>		
-				</div>
-			</div> -->
+	<div class='background-image'></div>
 
-			<img id="title" class="title" src="../icons/PraksaCentarTekstLogo.png" alt="Praksa Centar"></div>
+	<header>
+			<div id='message'>
+				<div id='subtitle'>Dobro dosli!</div>
+				<div id='title'>Prijava</div>
+			</div>
+			<button id="help">?</button>
+	</header>
 
-			<button id="get_started">
-				Get Started
-			</button>
-		</div>
+	<div id='screen'>
+		<!--
+			<div id='login'>
+				<div id='label'> Ime i prezime: </div>
+				<div class='field'><input type='text' name='userName' value='' placeholder='Ime Prezime'><i class='fa-solid fa-user'></i></div>
+				<div id='label'> E-mail adresa: </div>
+				<div class='field'><input type='email' name='email' value='' placeholder='example@mail.com'><i class='fa-solid fa-envelope'></i></div>
+				<div id='label'> Broj telefona: </div>
+				<div class='field'><input type='text' name='phoneNumber' value='' placeholder='+387123456789'><i class='fa-solid fa-phone'></i></div>
+			</div>	
+			
+			<div id='button-panel'>
+				<div id='continue-container'>
+					<button type='button' id='continue'>Dalje</button>
+					<div class='indicator'><i class='fa-solid fa-arrow-right'></i></div>
+				</div>
+				<button id='login-link'>Vec imam profil?</button>
+			</div>
+		-->
+				
+			
+	</div>
 	
+	<div id="notification">
+		<div id="content">
+			<div id="message">Error.</div>
+			<button id="close">x</button>
+		</div>
+	</div>
 
-<script src="../js/get_started.js"></script>
+	<script src='../js/get_started.js'></script>
 </body>
 </html>
 

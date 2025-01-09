@@ -1,32 +1,51 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-app = Flask(__name__)
+from MySQLdb import _mysql as db
 
+app = Flask(__name__,
+        static_url_path='', 
+        static_folder='images')
 CORS(app)
 
-# on the terminal type: curl http://127.0.0.1:5000/ 
 # returns hello world when we use GET. 
 # returns the data that we send when we use POST. 
-@app.route('/', methods = ['GET', 'POST']) 
+@app.route('/latest-event', methods = ['GET']) 
 def home(): 
     if(request.method == 'GET'): 
-  
-        data = "hello world"
-        return jsonify({'data': data}) 
-  
-  
-# A simple function to calculate the square of a number 
-# the number to be squared is sent in the URL when we use GET 
-# on the terminal type: curl http://127.0.0.1:5000 / home / 10 
-# this returns 100 (square of 10) 
-@app.route('/home/<int:num>', methods = ['GET']) 
-def disp(num): 
-  
-    return jsonify({'data': num**2}) 
-  
+        return jsonify(getLatestEvent()) 
+   
+def getLatestEvent():
+    latestEvent = {"name":"M:tel app", "description":"M:tel app takimcenje je mtelovo godisnje takmicenje za iskazivanje najboljih ideja...", "icon":"https://cdn.skenda.me/mtel-ikona.png", "event":"competition"} 
+    return latestEvent
+
+@app.route('/test-db', methods = ['GET'])
+def testDB():
+    praksaCentarDb = db.connect(host="localhost",user="bery",passwd="l4mpe/pr4ks4",db="praksa_centar")
+    praksaCentarDb.query("""SELECT * FROM users;""")
+
+    data = praksaCentarDb.store_result()
+    result = data.fetch_row(maxrows=0) 
+    
+    users = []
+    for row in result:    
+        users.append({
+        "id": row[0].decode(),
+        "username": row[1].decode(),
+        "password": row[2].decode(),
+        "email": row[3].decode()
+        })
+
+    return jsonify(users[0]) 
+    pass
+    
+
   
 # driver function 
 if __name__ == '__main__': 
   
-    app.run(debug = True)
+    app.run(host='0.0.0.0', port=5050, debug=True)
+    #app.run(host='0.0.0.0', port=443, ssl_context=(
+     #   '/etc/letsencrypt/live/cdn.skenda.me/fullchain.pem',
+      #  '/etc/letsencrypt/live/cdn.skenda.me/privkey.pem'))
+

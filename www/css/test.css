@@ -1,0 +1,42 @@
+body{
+	background-color: var(--background-color);
+}
+
+#ring{
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+
+	width: 200px;
+
+	border: solid 20px var(--text-light-color);
+	border-bottom-color: transparent;
+
+	animation: rotate 1s infinite linear;
+}
+
+
+@keyframes rotate{
+	from{
+		rotate: 0deg;
+	}
+	to{
+		rotate: 360deg;
+	}
+}
+
+svg {
+	width: 400px;
+	height: 400px;	
+	border: solid 1px white;
+}
+svg path {
+	stroke: white;
+	stroke-width: .4;	
+	fill: green;
+	stroke-linecap: round;
+	stroke-miterlimit: 0;
+	stroke-linejoin: round;
+	paint-order: fill markers stroke;
+	overflow: hidden;
+}
+
