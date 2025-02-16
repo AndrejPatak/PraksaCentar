@@ -28,3 +28,6 @@ node_modules/
 # Custom ignores:
 build/debug/
 .git/
+
+# scripts
+www/start.sh

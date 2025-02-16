@@ -1,21 +1,86 @@
 :root{
+	--error-red: #EF2E31;
+	--success-green: #4BB543;
+	--text-light-color: #D9D9D9;
+	--text-dark-color: #0B0F14;
+	--background-light: #FFFFFF;
+}
+
+@media (prefers-color-scheme: light) {
+	:root{
+		--text-color: #0B0F14;
+		--background-fun-color: #25153B;
+		--background-color: #FFFFFF;
+		--text-light-color: #D9D9D9;
+		--subtext-color: #444A53;
+		--text-dark-color: #1A181D;
+		--title-color: #FFF078;
+		--highlight-color: #444A53;
+
+		--button-color: #D9D9D9;
+		--button-fun-color: #0B0F14;
+		--button-highlight-color: #FFF07820;
+		--button-highlight-opaque-color: #0B0F14;
+		--button-clicked-color: #FBB536;
+		--button-text-color: #D9D9D9;
+
+		--panel-background-color: #FFFFFF;
+		--card-background: #ECECEC;
+		--card-picture-background: #ECECEC;
+		--panel-text-color: #0B0F14;
+		--divider-color: #F2F3F3;
+		--popup-background: #FFFFFF;
+		--popup-title-background: #F5F5F5;
+		--popup-title-foreground: #C6C6C6;
+
+		--panel-border-color: #F2F3F3;
+
+		--background-image: url("../backgrounds/common_background_light.png");
+		--background-opacity: 20%;
+
+		--input-field-background: var(--divider-color);
+
+		--light-border: 2px;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+
+	:root{
+	--text-color: #D9D9D9;
 	--background-fun-color: #25153B;
 	--background-color: #1A181D;
-	--text-light-color: #D9D9D9;
+	
 	--subtext-color: #BFBBC6;
-	--text-dark-color: #1A181D;
+	
 	--title-color: #FFF078;
+	--highlight-color: #FFF078;
+
 	--button-color: #D9D9D9;
 	--button-fun-color: #FFF078;
 	--button-highlight-color: #FFF07820;
 	--button-highlight-opaque-color: #FFF078;
-	--button-text-color: #231439;
 	--button-clicked-color: #FBB536;
+
 	--panel-background-color: #2B2830;
-	--card-background: #232126;
+	--card-background: #242227;
 	--card-picture-background: #1c1a1e;
 	--panel-text-color: #D9D9D9;
 	--divider-color: #44404A;
-	--error-red: #EF2E31;
+	
+	
+	--popup-background: #1E1E20;
+	--popup-title-background: #272528;
+	--popup-title-foreground: #2D2A2E;
+	
+	--background-image: url("../backgrounds/common_background.png");
+	--background-opacity: 15%;
+
+	--input-field-background: #2B2830;
+	
+	}
+
 
 }
+
+

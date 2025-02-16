@@ -21,31 +21,29 @@
 	<header>
 			<div id='message'>
 				<div id='subtitle'>Dobro dosli!</div>
-				<div id='title'>Prijava</div>
+				<div id='title'>Login</div>
 			</div>
 			<button id="help">?</button>
 	</header>
 
 	<div id='screen'>
-		<!--
-			<div id='login'>
-				<div id='label'> Ime i prezime: </div>
-				<div class='field'><input type='text' name='userName' value='' placeholder='Ime Prezime'><i class='fa-solid fa-user'></i></div>
-				<div id='label'> E-mail adresa: </div>
-				<div class='field'><input type='email' name='email' value='' placeholder='example@mail.com'><i class='fa-solid fa-envelope'></i></div>
-				<div id='label'> Broj telefona: </div>
-				<div class='field'><input type='text' name='phoneNumber' value='' placeholder='+387123456789'><i class='fa-solid fa-phone'></i></div>
-			</div>	
+		<div id='login' class='pwd'>
 			
-			<div id='button-panel'>
-				<div id='continue-container'>
-					<button type='button' id='continue'>Dalje</button>
-					<div class='indicator'><i class='fa-solid fa-arrow-right'></i></div>
-				</div>
-				<button id='login-link'>Vec imam profil?</button>
+			<div class='label'> E-mail adresa: </div>
+			<div class='field'><input type='email' name='email' value='' placeholder='example@mail.com' id="email"><i class='fa-solid fa-envelope'></i></div>
+
+
+
+			<div class='label'> Sifra: </div>
+			<div class='field'><input type='password' name='password' placeholder='!#$%*@' id='pwd'>
+				<button id='showHidePwd'><i class='fa-solid fa-eye-slash'></i></button>
 			</div>
-		-->
-				
+		</div>
+		<div id='button-panel'>
+			<div id='continue-container' class='register-button'>
+				<button type='submit' id='login-button'>Dalje</button>
+			</div>
+		</div>				
 			
 	</div>
 	
@@ -56,7 +54,7 @@
 		</div>
 	</div>
 
-	<script src='../js/get_started.js'></script>
+	<script src='../js/login.js'></script>
 </body>
 </html>
 

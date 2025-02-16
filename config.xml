@@ -6,9 +6,8 @@
         oKvir
     </author>
     <edit-config xmlns:android="http://schemas.android.com/apk/res/android" file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-		<application android:usesCleartextTraffic="true"/>
-		<attribute android:windowSoftInputMode="adjustNothing|stateHidden" />
-    </edit-config>
+	    <application android:usesCleartextTraffic="true" android:windowSoftInputMode="adjustNothing|stateHidden" />
+	</edit-config>
     <!-- Allow navigation to external URLs -->
     <allow-navigation href="http://*/*"/>
     <allow-navigation href="https://*/*"/>
@@ -21,9 +20,20 @@
     <allow-intent href="https://*/*"/>
     <platform name="android">
         <!-- Adaptive Icon Configuration -->
-        <icon background="res/assets/icon-background.png" density="xxxhdpi" foreground="res/assets/icon-foreground.png"/>
+		<icon background="res/assets/icon-background.png" density="xxxhdpi" foreground="res/assets/icon-foreground.png"/>
+		<!-- SDK config
+		<preference name="android-minSdkVersion" value="29" />
+		<preference name="android-targetSdkVersion" value="33" /> -->
 	</platform>
 	<preference name="StatusBarOverlaysWebView" value="false" />
 	<preference name="StatusBarBackgroundColor" value="#2B2830" />
 	<preference name="NavigationBarBackgroundColor" value="#2B2830" />
+	
+	<preference name="AndroidInAppBrowserDarkMode" value="true" />
+	<preference name="WebViewMixedContentMode" value="1" />
+	
+
+
 </widget>
+
+

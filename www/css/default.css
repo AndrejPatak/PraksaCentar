@@ -2,11 +2,142 @@ body{
         background: var(--background-color);
         margin: 0;
 
-        color: var(--text-light-color);
+        color: var(--text-color);
         font-family: Inter-Normal;
 }
 
+header{
+	background: var(--background-color);
+}
+
 button{
-	background-color: var(--text-light-color);
+	background-color: var(--text-color);
 	color: var(--button-text-color);
+}
+
+#loading-box{
+	display: none;
+
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+
+	align-self: center;
+
+	width: 100%;
+	height: calc(100% - 10rem - 1em);
+	
+	& > #loader {
+  		width: 50px;
+  		aspect-ratio: 1;
+		border-radius: 50%;
+		border: 8px solid var(--text-color);
+  		animation:	spin1 0.8s infinite linear alternate, spin2 1.6s infinite linear;
+	}
+}
+
+@keyframes spin1{
+   0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+   12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+   25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+   50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+   100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes spin2{ 
+  0%    {transform: scaleY(1)  rotate(0deg)}
+  49.99%{transform: scaleY(1)  rotate(135deg)}
+  50%   {transform: scaleY(-1) rotate(0deg)}
+  100%  {transform: scaleY(-1) rotate(-135deg)}
+}
+
+
+#background-image{
+	background: var(--background-image);
+	opacity: var(--background-opacity);
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	z-index: -1;
+	background-position: center;
+	background-size: cover;
+}
+
+
+#notification{
+	position: absolute;
+	bottom: 0;
+
+	justify-self: center;	
+
+	margin-bottom: 1.5em;
+
+	width: 100%;
+	min-height: 2.5rem;
+	
+	display: none;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+	
+	& > #content{
+		filter: drop-shadow(0 0 5px #00000099);
+		width: 95%;
+
+		border-radius: 5px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		background-color: var(--error-red);
+		height: 100%;
+		
+		& > #message{
+			padding: .5em;
+			padding-right: 0;
+			width: 100%;
+			font-weight: 700;
+		}
+		
+		& > button{
+			height: 100%;
+			aspect-ratio: 1/1;
+			border: none;
+			border-radius: 5px;
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+			background-color: transparent;
+			font-size: 1.5rem;
+			color: var(--text-color);
+			font-weight: 800;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			padding-right: .5em;
+		}
+	}
+}
+
+@keyframes showNotif{
+	from{
+		opacity: 25%;
+		transform: translateY(20px);
+	}
+	to{
+		opacity: 100%;
+		transform: translateY(0);
+	}
+}
+
+@keyframes hideNotif{
+	to{
+		opacity: 0%;
+		transform: translateY(20px);
+	}
+	from{
+		opacity: 100%;
+		transform: translateY(0);
+	}
 }
