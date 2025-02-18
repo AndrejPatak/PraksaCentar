@@ -1,0 +1,67 @@
+<div id="container">
+	<form id="new-post-form">
+		<label for="title" class="form-label">Ime dogadjaja:</label>
+		<input type="text" name="title" value="" placeholder="Ime dogadjaja" id="title-input">
+		
+		<div class="divider"></div>	
+
+		<label for="description" class="form-label">Opis dogadjaja:</label>	
+		<textarea placeholder="Opis dogadjaja" name="description" id="description-input"></textarea>
+		<div class="divider"></div>	
+
+		<label for="upload-img" class="form-label">Promotivna slika</label>
+		<div id="upload-img" name="upload-img">
+			
+			<img src="" alt="" id="promo-photo">
+			<div id="upload-container">
+				Odaberi iz galerije <div id="gallery-icon"><i class="fa-regular fa-image"></i></div>
+				<input type="file" name="" value="" placeholder="Promotivna slika" id="image-input">
+			</div>
+
+		</div>
+		<div class="divider"></div>	
+	
+		<label for="date" class="form-label">Datum isteka: </label>
+		<div id="date" name="date">
+			<div id="date-input">
+				<input type="date" name="" value="" id="expiry-date-input">
+				<div id="calendar-icon"><i class="fa-regular fa-calendar"></i></div>
+			</div>
+
+		</div>
+		
+		<div class="divider"></div>	
+		
+		<label for="post-type" class="form-label">Odaberite tip objave:</label>
+		<div id="type-container">
+			<select name="post-type" id="post-type">
+  				<option value="internship">Praksa</option>
+  				<option value="competition">Takmičenje</option>
+  				<option value="other">Drugo</option>
+			</select>
+			<div id="chevron-icon"><i class="fa-solid fa-chevron-down"></i></div>
+		</div>
+		<div class="divider"></div>	
+		
+		<label for="links" class="form-label">Linkovi:</label>
+		<div id="links" name="links" type="none">
+		
+			<div class="link" id="id-0">
+				<div class="link-element">	
+					<input type="text" name="" value="" placeholder="Ime linka" class="link-name">
+					<input type="text" name="" value="" placeholder="Link na stranicu" class="link-value">	
+				</div>
+				<button class="remove-link"> <i class="fa-solid fa-xmark"></i></button>
+			</div>
+		</div>
+		<button type="button" id="add-link">Dodaj link</button>
+		<div class="divider"></div>	
+
+		<div id="form-buttons">
+			<button type="submit" name="" value="Objavi" id="publish">Objavi</button>
+			<button type="button" name="" value="Odustani" id="giveup">Odustani</button>
+		</div>
+	</form>
+</div>
+
+

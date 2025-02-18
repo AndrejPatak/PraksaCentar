@@ -3,38 +3,81 @@ let profile_image = localStorage.getItem("profile_image");
 let school_str = localStorage.getItem("school");
 let email_str = localStorage.getItem("email");
 let phone_str = localStorage.getItem("phone_num");
+let type = localStorage.getItem("account_type");
 let last_loaded_post;
+
+let editingPost = -1;
 
 let month_table = {"Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06", "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"};
 
 let posts;
 
 let homeTemplate;
-fetch("../templates/home_template.html").then((response) => response.text()).then((html) => {
-	homeTemplate = html;
-}).then(function(){
-	try {
-		loadPage("home");
-		//fetchRecentPosts().then(loadRecentPosts);
-	}catch (error){
-		console.log("Failed loading home page: ", error);
-	}	
-});
+
+get_user_template();
+
+if(type !== "user"){
+	document.getElementById("eventButton").innerHTML = "<i class='fa-solid fa-plus'></i>";
+}
+
+function get_user_template(){
+	if(type === "user"){
+		set_template("../templates/home_template.html", (html) => {
+			homeTemplate = html;
+		}).then(function(){
+			try {
+				loadPage("home");
+			//fetchRecentPosts().then(loadRecentPosts);
+			}catch (error){
+				console.log("Failed loading home page: ", error);
+			}	
+		});
+	}else{
+		set_template("../templates/company_home.html", (html) => {
+			homeTemplate = html;
+		}).then(function(){
+			try {
+				loadPage("home");
+			//fetchRecentPosts().then(loadRecentPosts);
+			}catch (error){
+				console.log("Failed loading home page: ", error);
+			}
+		})
+	}
+}
+
+
+async function set_template(which, setter){
+	await fetch(which).then((response) => response.text()).then((html) => setter(html));
+}
 
 let searchTemplate;
-fetch("../templates/search_template.html").then((response) => response.text()).then((html) => {
-	searchTemplate = html;
-})
+if(type === "user"){
+	set_template("../templates/search_template.html", (html) => {
+		searchTemplate = html;
+	})
+}else{
+	set_template("../templates/new_post.html", (html) => {
+		searchTemplate = html;
+	})
+}
 
 let userTemplate;
-fetch("../templates/settings_template.html").then((response) => response.text()).then((html) => {
+set_template("../templates/settings_template.html", (html) => {
 	userTemplate = html;
 });
 
 let scrollElement;
-fetch("../templates/scroll-element.html").then((response) => response.text().then((html) => {
-	scrollElement = html;
-}))
+if(type === "user"){
+	set_template("../templates/scroll-element.html", (html) => {
+		scrollElement = html;
+	});
+}else{
+	set_template("../templates/editable_post.html", (html) => {
+		scrollElement = html;
+	});
+	
+}
 
 let latestCard = document.getElementById("latest-event");
 let latestCardTitle = document.querySelector("#latest-event > #title");
@@ -46,6 +89,9 @@ let themeToggle = document.getElementById("theme-toggle");
 let themeButton = document.getElementById("theme-button");
 let theme;
 let storedTheme = localStorage.getItem(theme);
+
+let areSettingsOpen = true;
+
 if(storedTheme){
 	theme = storedTheme;
 }else{
@@ -90,6 +136,10 @@ let homeHeaderTemplate = "<div id=\"pic\"></div>\
 
 let eventsHeaderTemplate = "<div id='search-title' class='title'>Pretraga</div>"
 
+if(type !== "user"){
+	eventsHeaderTemplate = "<div id='search-title' class='title'>Nova objava</div>"
+}
+
 let userHeaderTemplate = "<div id='info_display'>\
 	<div id='profile_image'><img src='' id='image'>\
 		<div id='upload_new' class='button'>\
@@ -98,7 +148,7 @@ let userHeaderTemplate = "<div id='info_display'>\
 	</div><div id='info_strings'>\
 	<div id='username'><input type='text' id='username-edit'>\
 	</div>\
-	<div id='school'><input type='text'> id='school-edit'\
+	<div id='school'><input type='text' id='school-edit'>\
 	</div></div>\
 </div>";
 
@@ -115,24 +165,10 @@ try {
 	console.log("Failed to load user info:", error)
 }
 
-//try {
-//	cordova.plugins.ThemeDetection.isDarkMode((res) => {
-//    console.log(res);
-//	notify(res, "success");
-//},	
-//	(error) => {
-//    console.log(error);
-//	notify(error, "error")
-//  }
-//);
-//} catch (error) {
-//	notify(error, "error");
-//}
-
 function loadUserInfo(tkn){
 	let user_info;
 	try{
-		//user_info = fetchAsync("https://cdn.skenda.me/get_user_by_token/" + tkn); //TODO: Handle this in the server to return the appropriate users info.
+	//	user_info = fetchAsync("https://cdn.skenda.me/get_user_by_token/" + tkn); //TODO: Handle this in the server to return the appropriate users info.
 	} catch (error){
 		console.log(error, "You probably didnt implement the server endpoint to get user info with a GET request.")
 	} finally {
@@ -153,8 +189,12 @@ async function postAsync (what, endpoint, type) {
         	method: "POST",
         	body: what,
 		})
+	}else if(type === "new-post"){
+		response = await fetch("https://cdn.skenda.me/" + endpoint, {
+			method: "POST",
+			body: what,	
+		})	
 	}else{
-
 		response = await fetch("https://cdn.skenda.me/" + endpoint, {
         	method: "POST",
         	headers: {
@@ -179,21 +219,23 @@ async function setDataAsString (of, url){
 }
 
 async function updateLatestEvent(){
-	try{
-		const latestEventData = await fetchAsync(currentServerAddress + "/latest-event");
-		
-		let shortenedDescription = latestEventData.description.substring(0, eventDescriptionLimit);
-
-		latestCardDescription.innerHTML = shortenedDescription + "...";
-		latestCardName.innerHTML = latestEventData.name;
-		latestCard.querySelector("#event > #icon > img").src = latestEventData.icon;
-
-	}catch (error){
-		console.log(error);
-
-		latestCardDescription.innerHTML = "Greska pri komunikaciji sa serverom.";
-		latestCardName.innerHTML = "Greska:";
-		latestCard.querySelector("#event > #icon > img").src = errorIcon;
+	if(type === "user"){
+		try{
+			const latestEventData = await fetchAsync(currentServerAddress + "/latest-event");
+				
+			let shortenedDescription = latestEventData.description.substring(0, eventDescriptionLimit);
+	
+			latestCardDescription.innerHTML = shortenedDescription + "...";
+			latestCardName.innerHTML = latestEventData.name;
+			latestCard.querySelector("#event > #icon > img").src = latestEventData.icon;
+	
+		}catch (error){
+			console.log(error);
+	
+			latestCardDescription.innerHTML = "Greska pri komunikaciji sa serverom.";
+			latestCardName.innerHTML = "Greska:";
+			latestCard.querySelector("#event > #icon > img").src = errorIcon;
+		}
 	}
 		
 }
@@ -217,47 +259,82 @@ async function fetchRecentPosts(){
 	//console.log("Event info: ", latestEventsArr[0]);
 }
 
-async function loadRecentPosts(){
+async function loadRecentPosts(viewAll){
 	//console.log("load recents called");
+	
+	if(viewAll){
+		scrollContent = document.getElementById("scroll-content-all");
+	}
+
 	if(currentScreen === "home"){
-		scrollContent.innerHTML = "<div id='loading'><div id='spinner'></div></div>";	
+		scrollContent.innerHTML = "<div id='loading'><div id='spinner'></div></div>";
+		loader = document.getElementById("loading");
 		for(let i = 0; i < latestEventsArr.length; i++){
-		//scrollContent.innerHTML += "<div class='scroll-element'> scroll-element </div>"
+				//scrollContent.innerHTML += "<div class='scroll-element'> scroll-element </div>"
+			console.log("Length: ", latestEventsArr.length);
 			scrollContent.insertAdjacentHTML("beforeend", scrollElement);
-			let scrollElementData = scrollContent.querySelectorAll(".scroll-element")[i];
+			
 			let event = latestEventsArr[i];
-			
-			if(event.image.includes("https:/")){
-				scrollElementData.querySelector("#image > #picture").style.backgroundImage = "url(" + event.image + ")";
-			}else{
-				scrollElementData.querySelector("#image > #picture").innerHTML = errorIcon;				
-			}
+			if(type === "user"){
+				let scrollElementData = scrollContent.querySelectorAll(".scroll-element")[i];
+				if(event.image.includes("https:/")){
+					scrollElementData.querySelector("#image > #picture").style.backgroundImage = "url(" + event.image + ")";
+				}else{
+					scrollElementData.querySelector("#image > #picture").innerHTML = errorIcon;				
+				}
 	
-			scrollElementData.querySelector("#title").innerHTML = event.title;
-			switch (event.type){
-				case "competition":
-						scrollElementData.querySelector("#chin > #content > #left > #type").innerHTML = "Takmičenje";
-				break;	
-				case "internship":
-					scrollElementData.querySelector("#chin > #content > #left > #type").innerHTML = "Praksa";
-				break;
-			}
-			scrollElementData.querySelector("#chin > #content > #left > #posted-on > #date").innerHTML = event.posted_date.slice(5, 16);
-			scrollElementData.querySelector("#chin > #content > #left > #length > #time").innerHTML = event.expiry_date.slice(5, 16);
-			
-			scrollElementData.querySelector("#chin > #content > #right > #open").addEventListener("click", () => {openPost(i)});
+				scrollElementData.querySelector("#title").innerHTML = event.title;
+				switch (event.type){
+					case "competition":
+							scrollElementData.querySelector("#chin > #content > #left > #type").innerHTML = "Takmičenje";
+					break;	
+					case "internship":
+						scrollElementData.querySelector("#chin > #content > #left > #type").innerHTML = "Praksa";
+					break;
+				}
+				scrollElementData.querySelector("#chin > #content > #left > #posted-on > #date").innerHTML = event.posted_date.slice(5, 16);
+				scrollElementData.querySelector("#chin > #content > #left > #length > #time").innerHTML = event.expiry_date.slice(5, 16);
+				
+				scrollElementData.querySelector("#chin > #content > #right > #open").addEventListener("click", () => {openPost(i)});
 		//scrollContent.querySelector(".scroll-element:nth-child(" + (i + 0) + ")").innerHTML += " " + i;
-		}
+			}else{
+				let scrollElementData = scrollContent.querySelectorAll(".comapny_scroll")[i];
+				if(event.image.includes("/images")){
+					scrollElementData.querySelector("#info> #image").style.backgroundImage = "url(" + "https://cdn.skenda.me" + event.image.replace("files", "") + ")";
+				}else{
+					scrollElementData.querySelector("#info > #image").innerHTML = errorIcon;				
+				}
 	
+				scrollElementData.querySelector("#info > #title").innerHTML = event.title;
+								
+				scrollElementData.querySelector("#buttons > #open-post").addEventListener("click", () => {openPost(i)});
+				scrollElementData.querySelector("#buttons > #delete-post").addEventListener("click", () => {
+					deletePost(event.id);
+				} )
+				scrollElementData.querySelector("#buttons > #edit-post").addEventListener("click", () => {
+					editPost(event.id);
+				})
+			}
+		}
+		scrollContent = document.getElementById("scroll-content");
+	}	
 		if(loader){
 			hideLoadingSpinner();
 		}
 	}
+function editPost(post_index){
+	editingPost = post_index;
+	loadPage('events');
+}
+
+
+function deletePost(post_id){
+	postAsync({"post_id": post_id, "tkn": localStorage.getItem("lgntkn")}, "delete_post", "json");
 }
 
 function openPost(post_index){
 	let opened_post = latestEventsArr[post_index];
-	console.log("Opened post: ", opened_post);
+	//console.log("Opened post: ", opened_post);
 	let post_view = document.getElementById("post-view");
 
 	fetch("../templates/post_view.html").then((template) => {
@@ -266,9 +343,9 @@ function openPost(post_index){
 			handleClosePost(post_view);
 		}).then(function(){
 			document.getElementById("post-title").innerHTML = opened_post.title;	
-			document.getElementById("description-text").innerHTML = opened_post.description;	
+			document.getElementById("description-text").innerHTML = opened_post.description.replace(/\n/g, "<br>");	
 			document.getElementById("poster").innerHTML = opened_post.poster;
-			document.getElementById("post-image").src = opened_post.image;
+			document.getElementById("post-image").src = "https://cdn.skenda.me/" + opened_post.image.replace("files", "");
 
 			document.getElementById("expand").addEventListener("click", function(){
 				let height = document.getElementById("post-description").style.height;
@@ -323,18 +400,26 @@ async function loadPage(page){
 			updateLatestEvent();
 
 			await loadRecentPosts();
+			
 			try{
 				//await fetchRecentPosts().then(loadRecentPosts);
-				await fetch_n_events().then(loadRecentPosts);
+				if(type === "user"){
+					await fetch_n_events().then(loadRecentPosts);
+				}else{
+					document.getElementById("open-all").addEventListener("click", open_all_posts);
+					await fetch_posted_events().then(loadRecentPosts);
+				}
 			}finally{
 				hideLoadingSpinner();
 			}
-			break;	
-				
+				break;	
+			
 //---------------
 		case "events":
 			if(eventsHeaderCacheTemplate && eventsHeaderCacheTemplate !== ""){
+				
 				header.innerHTML = eventsHeaderCacheTemplate;
+
 			}else{
 				header.innerHTML = eventsHeaderTemplate;	
 			}
@@ -350,6 +435,8 @@ async function loadPage(page){
 			homeButton.classList.remove("highlight");
 			eventButton.classList.add("highlight");
 			userButton.classList.remove("highlight");
+
+			run();
 
 			updateReferences();
 		break;
@@ -385,12 +472,38 @@ async function loadPage(page){
 
 			document.getElementById("upload-cv").addEventListener("click", uploadCV);
 			document.getElementById("edit-diplomas").addEventListener("click", uploadDiploma);
+
+			
+
+			document.getElementById("hide_settings").addEventListener("click", function(){
+				if(areSettingsOpen){
+					document.getElementById("user_settings").style.animation = ".2s slideClosed forwards ease-in-out";
+					document.getElementById("hide_settings").innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
+					areSettingsOpen = false;
+				}else{
+					document.getElementById("user_settings").style.animation = ".2s slideOpen forwards ease-in-out";
+					document.getElementById("hide_settings").innerHTML = '<i class="fa-solid fa-chevron-down"></i>'
+					areSettingsOpen = true;
+				}	
+				
+			})
 		break;
 //---------------
 		default:
 		
-		break;
+			break;
 	}	
+}
+
+function open_all_posts(){
+	document.getElementById("view-all").style.display = "block";
+	document.getElementById("close-all").addEventListener("click", close_all_posts);
+	loadRecentPosts("all");
+}
+
+function close_all_posts(){
+	document.getElementById("view-all").style.display = "none";
+	hideLoadingSpinner();
 }
 
 function uploadCV(){
@@ -475,7 +588,7 @@ function updateReferences(){
 	loader = document.getElementById("loading");
 	themeButton = document.getElementById("theme-button");
 	themeToggle = document.getElementById("theme-toggle");
-	school_label = document.getElementById("school");	
+	school_label = document.getElementById("school");
 }
 
 let toggleTimeoutId;
@@ -488,10 +601,8 @@ function loadEvents(){
 function hideLoadingSpinner(){	
 	//console.log("hidden the spidden");
 	document.getElementById("loading").style.display = "none";
-	loader.style.backgroundColor = "red";
 	//console.log(loader);
-	
-}
+	}
 function showLoadingSpinner(){
 	//console.log("showdden the spidden");
 	document.getElementById("loading").style.display = "flex";
@@ -591,39 +702,86 @@ function showPupup(type){
 	}
 }
 
-async function fetch_n_events(){ // n is defined on the server
+async function fetch_posted_events(){
 	let posts_response;
-	let loaded_date = "";
-	let parsed_date = "";
-
-	if(last_loaded_post){
-		loaded_date = last_loaded_post.posted_date;
-		let sliced_date = loaded_date.slice(5, 16);
-
-		let day = sliced_date.slice(0, 2);
-		let month = month_table[sliced_date.slice(3, 6)];
-		let year = sliced_date.slice(7, 11);
-		console.log("day: ", day, "month: ", month, "year: ", year);
-
-		parsed_date = year + "-" + month + "-" + day;
-		console.log(parsed_date);
-	}
-
-	console.log("Loaded date: ", loaded_date);
-
-	posts_response = await postAsync({"token": localStorage.getItem("lgntkn"), "loaded-date": parsed_date}, "get_n_posts", "posts");
+	posts_response = await postAsync({"token": localStorage.getItem("lgntkn"), "from": localStorage.getItem("lgntkn")}, "get_n_posts", "posts");
 	
 	let posts_arr = posts_response.posts;
 	let last_loaded_index = 0;
 	for(let index in posts_arr){
-		latestEventsArr.push(posts_arr[index]);	
-		if(index === posts_arr.length - 1){
-			last_loaded_index = index;
-		} 
+		if(index >= last_loaded_index){
+			latestEventsArr.push(posts_arr[index]);	
+			if(index === posts_arr.length - 1){
+				last_loaded_index = index;
+			}
+		}
 	}
 	
 	last_loaded_post = latestEventsArr[last_loaded_index];
 	console.log(last_loaded_post);
+
+}
+
+
+
+async function fetch_n_events() {
+    let posts_response;
+    let loaded_date = "";
+    let parsed_date = "";
+    let offset = 0; // Start at the first post
+    const limit = 20; // Number of posts per request
+
+    // Check if there is a last loaded post to determine the loaded_date
+    if (last_loaded_post) {
+        loaded_date = last_loaded_post.posted_date;
+        let sliced_date = loaded_date.slice(5, 16);
+
+        let day = sliced_date.slice(0, 2);
+        let month = month_table[sliced_date.slice(3, 6)];
+        let year = sliced_date.slice(7, 11);
+        console.log("day: ", day, "month: ", month, "year: ", year);
+
+        parsed_date = year + "-" + month + "-" + day;
+        console.log(parsed_date);
+    }
+
+    console.log("Loaded date: ", loaded_date);
+
+    // Making the API call with pagination parameters (offset and limit)
+    posts_response = await postAsync(
+        {
+            "token": localStorage.getItem("lgntkn"),
+            "loaded-date": parsed_date,
+            "offset": offset,  // Add offset
+            "limit": limit     // Add limit
+        },
+        "get_n_posts",
+        "posts"
+    );
+
+    let posts_arr = posts_response.posts;
+    let last_loaded_index = 0;
+
+    // Add the posts to the latestEventsArr
+    for (let index in posts_arr) {
+		console.log("loaded post: ", index);
+        latestEventsArr.push(posts_arr[index]);
+
+        // Track the index of the last loaded post
+        if (index === posts_arr.length - 1) {
+            last_loaded_index = index;
+        }
+    }
+
+    // Update the last loaded post
+    last_loaded_post = latestEventsArr[last_loaded_index];
+    console.log(last_loaded_post);
+
+    // Optionally, you can now update the offset for the next load (e.g., when loading more posts)
+    offset += limit;
+
+    // For demonstration, print the updated offset to ensure it increments correctly
+    console.log("Updated offset: ", offset);
 }
 
 function update_profile_image(obj){

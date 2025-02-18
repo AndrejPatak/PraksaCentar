@@ -8,6 +8,7 @@
 
 @media (prefers-color-scheme: light) {
 	:root{
+		--text-invert-color: #D9D9D9;
 		--text-color: #0B0F14;
 		--background-fun-color: #25153B;
 		--background-color: #FFFFFF;
@@ -45,8 +46,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
 	:root{
+	--text-invert-color: #0B0F14;
 	--text-color: #D9D9D9;
 	--background-fun-color: #25153B;
 	--background-color: #1A181D;
